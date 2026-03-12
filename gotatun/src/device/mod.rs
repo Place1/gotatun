@@ -248,6 +248,21 @@ impl<T: DeviceTransports> Connection<T> {
 }
 
 impl<T: DeviceTransports> Device<T> {
+    pub async fn up(&mut self) -> Result<(), Error> {
+        {
+            let state = self.inner.read().await;
+            if state.connection.is_some() {
+                return Ok(());
+            }
+            drop(state);
+        }
+
+        let con = Connection::set_up(self.inner.clone()).await?;
+        let mut state = self.inner.write().await;
+        state.connection = Some(con);
+        Ok(())
+    }
+
     /// Stop tunneling traffic and shut down the [`Device`].
     pub async fn stop(self) {
         Self::stop_inner(self.inner.clone()).await
