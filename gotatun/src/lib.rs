@@ -28,7 +28,7 @@ mod task;
 pub(crate) mod sleepyinstant;
 
 #[cfg(feature = "device")]
-pub(crate) mod serialization;
+pub mod serialization;
 
 /// Re-export of the x25519 types
 pub mod x25519 {
