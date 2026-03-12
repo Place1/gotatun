@@ -82,6 +82,12 @@ impl Peer {
         self
     }
 
+    /// Specify the keepalive interval in seconds.
+    pub fn with_keepalive(mut self, interval_seconds: u16) -> Self {
+        self.keepalive = Some(interval_seconds);
+        self
+    }
+
     /// Set the DAITA settings for this peer.
     #[cfg(feature = "daita")]
     pub fn with_daita(mut self, daita_settings: DaitaSettings) -> Self {
