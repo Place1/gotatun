@@ -32,7 +32,7 @@ pub mod tun_async_device;
 ///
 /// This is used as an abstraction of the TUN device used by WireGuard,
 /// but can be implemented by anything. For example, a tokio channel.
-pub trait IpSend: Send + Sync + 'static {
+pub trait IpSend: Send + 'static {
     /// Send a complete IP packet.
     // TODO: consider refactoring trait with methods that take `Packet<Ipv4>` and `Packet<Ipv6>`
     fn send(&mut self, packet: Packet<Ip>) -> impl Future<Output = io::Result<()>> + Send;
@@ -42,7 +42,7 @@ pub trait IpSend: Send + Sync + 'static {
 ///
 /// This is used as an abstraction of the TUN device used by WireGuard,
 /// but can be implemented by anything. For example, a tokio channel.
-pub trait IpRecv: Send + Sync + 'static {
+pub trait IpRecv: Send + 'static {
     /// Receive a complete IP packet.
     // TODO: consider refactoring trait with methods that return `Packet<Ipv4>` and `Packet<Ipv6>`
     fn recv<'a>(
